@@ -8,7 +8,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
 @Path("/action")
-public class User {
+public class UserController {
 	@GET
 	@Path("users")
 	public String getTasks(){

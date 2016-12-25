@@ -1,5 +1,7 @@
 package cn.edu.ycm.union.controller;
 
+import java.util.List;
+
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -7,14 +9,22 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
-@Path("/action")
-public class Task {
+import com.google.gson.Gson;
 
+import cn.edu.ycm.union.database.DatabaseOper;
+import cn.edu.ycm.union.utils.TaskTemplate;
+
+@Path("/action")
+public class TaskController {
+
+	private DatabaseOper dbOper = new DatabaseOper();
+	
 	@GET
 	@Path("tasks")
 	public String getTasks(){
-		String result  = "列表";
-		return result;
+		List<TaskTemplate> tempaltes = dbOper.getTaskTemplates();
+		//String result  = "列表";
+		return new Gson().toJson(tempaltes);
 	}
 	
 	@POST
@@ -42,6 +52,18 @@ public class Task {
 	@Path("task/{id}")
 	public String RetrieveTask(@PathParam("id") String id){
 		String result  = "查";
+		
+		
+		//从数据库找到对应的task，然后反馈给前台
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		return result;
 	}
 	
