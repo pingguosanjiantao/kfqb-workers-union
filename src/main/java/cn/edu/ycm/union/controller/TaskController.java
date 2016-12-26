@@ -22,6 +22,7 @@ public class TaskController {
 	@GET
 	@Path("tasks")
 	public String getTasks(){
+		System.out.println("request getTasks");
 		List<TaskTemplate> tempaltes = dbOper.getTaskTemplates();
 		//String result  = "列表";
 		return new Gson().toJson(tempaltes);
@@ -30,6 +31,7 @@ public class TaskController {
 	@POST
 	@Path("task")
 	public String createTask(){
+		System.out.println("request ");
 		String result  = "增";
 		return result;
 	}
@@ -37,6 +39,7 @@ public class TaskController {
 	@DELETE
 	@Path("task/{id}")
 	public String delateTask(@PathParam("id") String id){
+		System.out.println("request ");
 		String result  = "删";
 		return result;
 	}
@@ -44,6 +47,7 @@ public class TaskController {
 	@PUT
 	@Path("task/{id}")
 	public String updateTask(@PathParam("id") String id){
+		System.out.println("request ");
 		String result  = "改";
 		return result;
 	}
@@ -51,6 +55,7 @@ public class TaskController {
 	@GET
 	@Path("task/{id}")
 	public String RetrieveTask(@PathParam("id") String id){
+		System.out.println("request ");
 		String result  = "查";
 		
 		
