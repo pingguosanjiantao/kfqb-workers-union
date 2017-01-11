@@ -6,9 +6,13 @@
 	<display-name>kfqb-workers-union</display-name>
 	<context-param>
 		<param-name>resteasy.resources</param-name>
-		<param-value>cn.edu.ycm.union.controller.TaskController,
+		<param-value>cn.edu.ycm.union.controller.LoginController,
+								cn.edu.ycm.union.controller.TaskController,
 								cn.edu.ycm.union.controller.UserController</param-value>
 	</context-param>
+	<listener>
+		<listener-class>cn.edu.ycm.union.usercache.UserMap</listener-class>
+	</listener>
 	<listener>
 		<listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
 	</listener>
@@ -18,9 +22,24 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Resteasy</servlet-name>
+		<url-pattern>/login/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Resteasy</servlet-name>
 		<url-pattern>/action/*</url-pattern>
 	</servlet-mapping>
+	
+	<filter>
+		<filter-name>login-filter</filter-name>
+		<filter-class>cn.edu.ycm.union.filters.LoginFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>login-filter</filter-name>
+		<url-pattern>/login/*</url-pattern>
+	</filter-mapping>
+	
+	
 	<welcome-file-list>
-		<welcome-file>/WEB-INF/pages/index_main.html</welcome-file>
+		<welcome-file>/pages/index.html</welcome-file>
 	</welcome-file-list>
 </web-app>
