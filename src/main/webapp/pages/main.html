@@ -12,11 +12,11 @@
     <title>欢迎进入工会统计系统</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom Fonts -->
-    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- Theme CSS -->
-    <link href="css/agency.min.css" rel="stylesheet">
+    <link href="../css/agency.min.css" rel="stylesheet">
 
 </head>
 
@@ -87,7 +87,7 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="team-member">
-                        <img src="img/team/1.jpg" class="img-responsive img-circle" alt="">
+                        <img src="../img/team/1.jpg" class="img-responsive img-circle" alt="">
                         <h4>蒋鹏程</h4>
                         <p class="text-muted">工会主席</p>
                         <ul class="list-inline social-buttons">
@@ -102,7 +102,7 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="team-member">
-                        <img src="img/team/2.jpg" class="img-responsive img-circle" alt="">
+                        <img src="../img/team/2.jpg" class="img-responsive img-circle" alt="">
                         <h4>招商中...</h4>
                         <p class="text-muted">席位空缺</p>
                         <ul class="list-inline social-buttons">
@@ -117,7 +117,7 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="team-member">
-                        <img src="img/team/3.jpg" class="img-responsive img-circle" alt="">
+                        <img src="../img/team/3.jpg" class="img-responsive img-circle" alt="">
                         <h4>招商中...</h4>
                         <p class="text-muted">席位空缺</p>
                         <ul class="list-inline social-buttons">
@@ -133,12 +133,38 @@
             </div>
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 text-center">
-                    <p class="large text-muted">招商电话：010-82970000，或与直接发送图片至邮箱，尺寸不限.</p>
+                		<a href="#portfolioModal" class="portfolio-link" data-toggle="modal">
+                        <p class="large text-muted">招商电话：010-82970000，或与直接发送图片至邮箱，尺寸不限.</p>
+                    </a>
                 </div>
             </div>
         </div>
     </section>
+	<div class="portfolio-modal modal fade" id="portfolioModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-dismiss="modal">
+                    <div class="lr">
+                        <div class="rl">
+                        </div>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-8 col-lg-offset-2">
+                            <div class="modal-body">
+                                <h2>医疗定点医院修改</h2>
+                                <p class="item-intro text-muted">截止至2017年1月10日.</p>
+                                <p id="testID"/>
 
+                                <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> 提交</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <footer>
         <div class="container">
@@ -150,12 +176,12 @@
         </div>
     </footer>
 
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="js/jquery.easing.min.js"></script>
-    <script src="js/jqBootstrapValidation.js"></script>
-    <script src="js/contact_me.js"></script>
-    <script src="js/agency.min.js"></script>
-    <script src="js/index_main.js"></script>
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../js/jquery.easing.min.js"></script>
+    <script src="../js/jqBootstrapValidation.js"></script>
+    <script src="../js/contact_me.js"></script>
+    <script src="../js/agency.min.js"></script>
+    <script src="../js/index_main.js"></script>
 </body>
 </html>

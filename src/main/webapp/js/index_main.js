@@ -19,6 +19,7 @@ $(document).ready(function(){
 	            	var selector = '#'+data[i].id;
 	            	//重新绑定事件
 	            	$('#taskTable').on('click', selector, function() {
+	            		$("#testID").append("<p>thest</p>");  
 	            		alert($(selector).attr("taskId"));
 	            		/*请求任务页面*/
 	            		$.ajax({
@@ -36,8 +37,9 @@ $(document).ready(function(){
 	            	        error: function() {
 	            	        },
 	            	    });
-	            		
-	            		
+	            		//弹出模态框供用户填写及提交
+	            		$('#portfolioModal').modal({
+	            	    })
 	            		
 	            		
 	            	});

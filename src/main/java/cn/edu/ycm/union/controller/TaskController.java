@@ -31,7 +31,7 @@ public class TaskController {
 	@POST
 	@Path("task")
 	public String createTask(){
-		System.out.println("request ");
+		System.out.println("request 增");
 		String result  = "增";
 		return result;
 	}
@@ -39,7 +39,7 @@ public class TaskController {
 	@DELETE
 	@Path("task/{id}")
 	public String delateTask(@PathParam("id") String id){
-		System.out.println("request ");
+		System.out.println("request 删");
 		String result  = "删";
 		return result;
 	}
@@ -47,7 +47,7 @@ public class TaskController {
 	@PUT
 	@Path("task/{id}")
 	public String updateTask(@PathParam("id") String id){
-		System.out.println("request ");
+		System.out.println("request 改");
 		String result  = "改";
 		return result;
 	}
@@ -55,7 +55,7 @@ public class TaskController {
 	@GET
 	@Path("task/{id}")
 	public String RetrieveTask(@PathParam("id") String id){
-		System.out.println("request ");
+		System.out.println("request 查");
 		String result  = "查";
 		
 		
