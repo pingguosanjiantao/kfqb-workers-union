@@ -17,10 +17,14 @@ import org.slf4j.LoggerFactory;
 
 import cn.edu.ycm.union.dto.UserInfo;
 import cn.edu.ycm.union.userbuffer.UserMap;
+import jodd.petite.meta.PetiteInject;
 
 public class LoginFilter implements Filter {
 
-	static final Logger logger = LoggerFactory.getLogger(LoginFilter.class);
+	private static final Logger logger = LoggerFactory.getLogger(LoginFilter.class);
+	
+	@PetiteInject
+	private UserMap userMap;
 	
 	@Override
 	public void destroy() {}
@@ -34,14 +38,11 @@ public class LoginFilter implements Filter {
 		res.setCharacterEncoding("utf-8");
 		HttpSession session = req.getSession();
 		UserInfo userInfo = (UserInfo) session.getAttribute("userId");
-		if (userInfo != null ){
-			System.out.println("get the person");
-		}else{
-			System.out.println("can not get the person");
+		if (userInfo == null || ! userMap.isLogin(userInfo.getId())){
+			logger.info("取不到用户信息或用户未登录，返回登录页面");
+			//res.sendRedirect("./");
 		}
 		//如果该用户未登录则返回欢迎登录页面
-		//res.sendRedirect("./");
-		logger.info("经过了filter");
 		chain.doFilter(req, res);
 	}
 

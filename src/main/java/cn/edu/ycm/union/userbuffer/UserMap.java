@@ -7,7 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cn.edu.ycm.union.dto.UserInfo;
+import jodd.petite.meta.PetiteBean;
 
+@PetiteBean
 public class UserMap {
 	
 	static final Logger logger = LoggerFactory.getLogger(UserMap.class);
@@ -33,28 +35,28 @@ public class UserMap {
 //		System.out.println("查询是否登录"+isLogin(a.getId()));
 	}
 	
-	public static boolean isLogin(String id){
+	public boolean isLogin(String id){
 		if (usersOnline.containsKey(id)){
 			return true;
 		}
 		return false;
 	}
 	
-	public static UserInfo getUserInfo(String id){
+	public UserInfo getUserInfo(String id){
 		return usersOnline.get(id);
 	}
 	
 	//插入，用于用户登录
-	public static void insertUser(UserInfo user){
+	public void insertUser(UserInfo user){
 		usersOnline.put(user.getId(), user);
 	}
 	
 	//删除，用于用户退出
-	public static void delUser(UserInfo user){
+	public void delUser(UserInfo user){
 		usersOnline.remove(user.getId());
 	}
 	//删除，用于用户退出
-	public static void delUserById(String Id){
+	public void delUserById(String Id){
 		usersOnline.remove(Id);
 	}
 }
