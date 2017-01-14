@@ -1,21 +1,21 @@
 <web-app>
+
 	<display-name>kfqb-workers-union</display-name>
+	
+	<!-- 上下文 -->
 	<context-param>
 		<param-name>resteasy.resources</param-name>
 		<param-value>cn.edu.ycm.union.controller.LoginController,
 								cn.edu.ycm.union.controller.TaskController,
 								cn.edu.ycm.union.controller.UserController</param-value>
 	</context-param>
-	<!-- 用户缓存模块 -->
-	<listener>
-		<listener-class>cn.edu.ycm.union.usercache.UserMap</listener-class>
-	</listener>
-	<!-- 数据库模块 -->
 	
-	
+	<!-- 容器 -->
 	<listener>
-		<listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
+		<listener-class>cn.edu.ycm.union.container.WorkersUnionContainer</listener-class>
 	</listener>
+	
+	<!-- Restful dispatcher -->
 	<servlet>
 		<servlet-name>Resteasy</servlet-name>
 		<servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
@@ -29,6 +29,7 @@
 		<url-pattern>/action/*</url-pattern>
 	</servlet-mapping>
 	
+	<!-- 登录模块 -->
 	<filter>
 		<filter-name>login-filter</filter-name>
 		<filter-class>cn.edu.ycm.union.filters.LoginFilter</filter-class>
@@ -38,8 +39,9 @@
 		<url-pattern>/login/*</url-pattern>
 	</filter-mapping>
 	
-	
+	<!-- 欢迎页 -->
 	<welcome-file-list>
 		<welcome-file>/pages/index.html</welcome-file>
 	</welcome-file-list>
+	
 </web-app>

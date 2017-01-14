@@ -1,7 +1,5 @@
 package cn.edu.ycm.union.controller;
 
-import java.util.List;
-
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -11,21 +9,22 @@ import javax.ws.rs.PathParam;
 
 import com.google.gson.Gson;
 
-import cn.edu.ycm.union.database.DatabaseOper;
-import cn.edu.ycm.union.utils.TaskTemplate;
+import cn.edu.ycm.union.service.TaskService;
+import jodd.petite.meta.PetiteInject;
 
 @Path("/action")
 public class TaskController {
 
-	private DatabaseOper dbOper = new DatabaseOper();
+	@PetiteInject
+	private TaskService taskService;
 	
 	@GET
 	@Path("tasks")
 	public String getTasks(){
 		System.out.println("request getTasks");
-		List<TaskTemplate> tempaltes = dbOper.getTaskTemplates();
+		//List<TaskTemplate> tempaltes = dbOper.getTaskTemplates();
 		//String result  = "列表";
-		return new Gson().toJson(tempaltes);
+		return new Gson().toJson("");
 	}
 	
 	@POST

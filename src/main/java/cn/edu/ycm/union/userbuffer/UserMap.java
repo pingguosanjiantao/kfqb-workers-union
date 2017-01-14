@@ -1,4 +1,4 @@
-package cn.edu.ycm.union.usercache;
+package cn.edu.ycm.union.userbuffer;
 
 import java.util.HashMap;
 import java.util.Map;

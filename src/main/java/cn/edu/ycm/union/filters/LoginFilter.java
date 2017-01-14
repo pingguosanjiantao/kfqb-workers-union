@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cn.edu.ycm.union.dto.UserInfo;
-import cn.edu.ycm.union.usercache.UserMap;
+import cn.edu.ycm.union.userbuffer.UserMap;
 
 public class LoginFilter implements Filter {
 

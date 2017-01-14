@@ -8,7 +8,10 @@ body {
     text-align: center;
 }
 
-strong { font-weight: 500; }
+strong { 
+	font-weight: 500;
+	color: #fed136;
+ }
 
 a, a:hover, a:focus {
 	color: #4aaf51;
