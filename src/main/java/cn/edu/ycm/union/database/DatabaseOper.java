@@ -15,10 +15,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 
 import cn.edu.ycm.union.dto.UserInfo;
-import jodd.petite.meta.PetiteBean;
-import jodd.petite.scope.ProtoScope;
 
-@PetiteBean(scope=ProtoScope.class)
 public class DatabaseOper {
 	
 	private static final String DB_NAME = "workers_union_product2";

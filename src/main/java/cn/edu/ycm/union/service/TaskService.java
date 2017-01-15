@@ -13,17 +13,12 @@ import cn.edu.ycm.union.dto.TaskObject;
 import cn.edu.ycm.union.dto.TaskRow;
 import cn.edu.ycm.union.dto.TaskTable;
 import cn.edu.ycm.union.dto.UserInfo;
-import jodd.petite.meta.PetiteBean;
-import jodd.petite.meta.PetiteInject;
-import jodd.petite.scope.ProtoScope;
 
-@PetiteBean(scope=ProtoScope.class)
 public class TaskService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(TaskService.class);
 	
-	@PetiteInject
-	private DatabaseOper databaseOper;
+	private DatabaseOper databaseOper = new DatabaseOper();
 	
 	//新建一个统计任务-注：任务不支持修改
 	public void createTask(TaskObject taskObject){

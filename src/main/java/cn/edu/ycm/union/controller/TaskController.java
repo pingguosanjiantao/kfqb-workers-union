@@ -10,13 +10,11 @@ import javax.ws.rs.PathParam;
 import com.google.gson.Gson;
 
 import cn.edu.ycm.union.service.TaskService;
-import jodd.petite.meta.PetiteInject;
 
 @Path("/action")
 public class TaskController {
 
-	@PetiteInject
-	private TaskService taskService;
+	private TaskService taskService = new TaskService();
 	
 	@GET
 	@Path("tasks")

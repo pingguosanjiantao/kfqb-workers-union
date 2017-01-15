@@ -7,7 +7,7 @@ jQuery(document).ready(function() {
     $('.login-form input[type="text"], .login-form input[type="password"], .login-form textarea').on('focus', function() {
     	$(this).removeClass('input-error');
     });
-    
+	
     $('.login-form').on('submit', function(e) {
     	
     	$(this).find('input[type="text"], input[type="password"], textarea').each(function(){
@@ -17,6 +17,18 @@ jQuery(document).ready(function() {
     		}
     		else {
     			$(this).removeClass('input-error');
+    			$.ajax({
+        	        url: "./login",
+        	        type: "POST",
+        	        cache: false,
+        	    	dataType:"json",
+        	    	data:{"username":$('#username').val(),"password":$('#password').val()},
+        	        success: function(data) {
+        	        	$('#myModal').modal()  
+        	        },
+        	        error: function() {
+        	        },
+        	    });
     		}
     	});
     	

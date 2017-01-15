@@ -15,7 +15,7 @@
 		<listener-class>cn.edu.ycm.union.container.WorkersUnionContainer</listener-class>
 	</listener>
 	
-	<!-- Restful dispatcher -->
+	<!-- 请求分发器 -->
 	<servlet>
 		<servlet-name>Resteasy</servlet-name>
 		<servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
@@ -36,7 +36,7 @@
 	</filter>
 	<filter-mapping>
 		<filter-name>login-filter</filter-name>
-		<url-pattern>/login/*</url-pattern>
+		<url-pattern>/action/*</url-pattern>
 	</filter-mapping>
 	
 	<!-- 欢迎页 -->

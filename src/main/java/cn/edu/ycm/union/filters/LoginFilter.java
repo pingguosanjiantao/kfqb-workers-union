@@ -17,14 +17,12 @@ import org.slf4j.LoggerFactory;
 
 import cn.edu.ycm.union.dto.UserInfo;
 import cn.edu.ycm.union.userbuffer.UserMap;
-import jodd.petite.meta.PetiteInject;
 
 public class LoginFilter implements Filter {
 
 	private static final Logger logger = LoggerFactory.getLogger(LoginFilter.class);
 	
-	@PetiteInject
-	private UserMap userMap;
+	private UserMap userMap = new UserMap();
 	
 	@Override
 	public void destroy() {}
