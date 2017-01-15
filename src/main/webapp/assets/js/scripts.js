@@ -21,12 +21,16 @@ jQuery(document).ready(function() {
         	    		dataType:"json",
         	    		data:{"username":$('#username').val(),"password":$('#password').val()},
         	        success: function(data) {
-        	        		$('#modaltext').text(data.msg);
-            			$('#myModal').modal();  
-        	        		
+        	        		//校验通过，跳转页面
+        	        		if (data.status === "0"){
+        	        			window.location.href=data.jumpurl;
+        	        		}else{//校验未通过，弹框提示
+        	        			$('#modaltext').text(data.msg);
+        	        			$('#myModal').modal();  
+        	        		}
         	        },
-        	        error: function(data) {
-        	        		$('#modaltext').text(data.msg);
+        	        error: function() {
+        	        		$('#modaltext').text("访问出错");
             			$('#myModal').modal();  
         	        },
         	    });

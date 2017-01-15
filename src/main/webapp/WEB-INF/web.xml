@@ -38,6 +38,10 @@
 		<filter-name>login-filter</filter-name>
 		<url-pattern>/action/*</url-pattern>
 	</filter-mapping>
+	<filter-mapping>
+		<filter-name>login-filter</filter-name>
+		<url-pattern>/page/*</url-pattern>
+	</filter-mapping>
 	
 	<!-- 欢迎页 -->
 	<welcome-file-list>

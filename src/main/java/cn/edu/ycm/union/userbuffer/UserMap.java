@@ -28,7 +28,12 @@ public class UserMap {
 	
 	//插入，用于用户登录
 	public void insertUser(UserInfo user){
-		usersOnline.put(user.getId(), user);
+		//如果用户已经存在则替换
+		if (!usersOnline.containsKey(user.getId())){
+			usersOnline.put(user.getId(), user);
+		}else{
+			usersOnline.replace(user.getId(), user);
+		}
 	}
 	
 	//删除，用于用户退出

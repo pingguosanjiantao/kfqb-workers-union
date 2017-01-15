@@ -38,10 +38,14 @@ public class LoginFilter implements Filter {
 		UserInfo userInfo = (UserInfo) session.getAttribute("userId");
 		if (userInfo == null || ! userMap.isLogin(userInfo.getId())){
 			logger.info("取不到用户信息或用户未登录，返回登录页面");
-			//res.sendRedirect("./");
+			//res.setHeader("Access-Control-Allow-Origin", "*");
+			//res.sendRedirect("../");
+			res.setStatus(404);
+		}else{
+			logger.info("用户"+userInfo.getId()+"已登录");
+			//如果该用户未登录则返回欢迎登录页面
+			chain.doFilter(req, res);
 		}
-		//如果该用户未登录则返回欢迎登录页面
-		chain.doFilter(req, res);
 	}
 
 	@Override

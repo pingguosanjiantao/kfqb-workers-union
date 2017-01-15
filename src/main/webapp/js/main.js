@@ -47,6 +47,7 @@ $(document).ready(function(){
 	        $("#taskTable").append(str);  
         },
         error: function() {
+        		window.location.href='../';
         },
     });
 	
