@@ -1,38 +1,38 @@
 
 jQuery(document).ready(function() {
 	
-	/*设置背景*/
+	//设置背景
     $.backstretch("assets/img/backgrounds/1.jpg");
     
-    $('.login-form input[type="text"], .login-form input[type="password"], .login-form textarea').on('focus', function() {
-    	$(this).removeClass('input-error');
-    });
-	
-    $('.login-form').on('submit', function(e) {
-    	
-    	$(this).find('input[type="text"], input[type="password"], textarea').each(function(){
-    		if( $(this).val() == "" ) {
-    			e.preventDefault();
-    			$(this).addClass('input-error');
-    		}
-    		else {
-    			$(this).removeClass('input-error');
+    $('#loginbtn').on('click', function() {
+    		//校验工号
+	    	if( $('#username').val() == "" ) {
+	    		$('#modaltext').text("请先输入工号");
+    			$('#myModal').modal();  
+    		//校验密码
+    		}else if($('#password').val() == ""){
+    			$('#modaltext').text("请先输入密码");
+    			$('#myModal').modal();  
+    		}else{
     			$.ajax({
         	        url: "./login",
         	        type: "POST",
         	        cache: false,
-        	    	dataType:"json",
-        	    	data:{"username":$('#username').val(),"password":$('#password').val()},
+        	    		dataType:"json",
+        	    		data:{"username":$('#username').val(),"password":$('#password').val()},
         	        success: function(data) {
-        	        	$('#myModal').modal()  
+        	        		$('#modaltext').text(data.msg);
+            			$('#myModal').modal();  
+        	        		
         	        },
-        	        error: function() {
+        	        error: function(data) {
+        	        		$('#modaltext').text(data.msg);
+            			$('#myModal').modal();  
         	        },
         	    });
+    			
     		}
-    	});
-    	
+			
     });
-    
     
 });

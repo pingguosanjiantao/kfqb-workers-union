@@ -11,6 +11,9 @@ import javax.ws.rs.core.Context;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.Gson;
+
+import cn.edu.ycm.union.dto.ReturnMsg;
 import cn.edu.ycm.union.dto.UserInfo;
 import cn.edu.ycm.union.service.UserService;
 import cn.edu.ycm.union.userbuffer.UserMap;
@@ -32,6 +35,8 @@ public class LoginController {
 		
 		logger.info("工号为"+userID+"的用户登录");
 		
+		ReturnMsg ret = new ReturnMsg();
+		
 		//查询是否已登录
 		if (userMap.isLogin(userID)){
 			logger.info("工号为"+userID+"的用户已经登录");
@@ -40,16 +45,19 @@ public class LoginController {
 			UserInfo result = userService.getUserInfoByID(userID);
 			if (result == null){
 				logger.info("工号为"+userID+"的用户不存在");
-				return "该用户不存在";
+				ret.setMsg("工号为"+userID+"的用户不存在");
+				return new Gson().toJson(ret);
 			}
 			if (result.getCellphone().equals(cellphone)){
 				logger.info("工号为"+userID+"的用户密码校验通过");
 				//response.sendRedirect("./pages/main.html");
-				return "ok";
+				ret.setMsg("ok");
+				return new Gson().toJson(ret);
 			}
 			logger.info("工号为"+userID+"的用户登录密码错误");
 		}
 		logger.info("工号为"+userID+"的用户登录失败");
-		return "密码错误";
+		ret.setMsg("密码错误");
+		return new Gson().toJson(ret);
 	}
 }
