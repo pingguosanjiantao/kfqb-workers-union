@@ -1,5 +1,7 @@
 package cn.edu.ycm.union.dto;
 
+import java.util.List;
+
 public class ReturnMsg {
 	
 	private String status;
@@ -10,6 +12,46 @@ public class ReturnMsg {
 
 	private String jumpurl;
 	
+	private List<UserInfo> users;
+	
+	private List<TaskObject> tasks;
+	
+	private UserInfo user;
+	
+	private TaskObject task;
+	
+	public List<UserInfo> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<UserInfo> users) {
+		this.users = users;
+	}
+
+	public List<TaskObject> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<TaskObject> tasks) {
+		this.tasks = tasks;
+	}
+
+	public UserInfo getUser() {
+		return user;
+	}
+
+	public void setUser(UserInfo user) {
+		this.user = user;
+	}
+
+	public TaskObject getTask() {
+		return task;
+	}
+
+	public void setTask(TaskObject task) {
+		this.task = task;
+	}
+
 	public String getName() {
 		return name;
 	}

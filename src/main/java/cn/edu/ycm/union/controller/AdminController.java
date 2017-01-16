@@ -3,7 +3,6 @@ package cn.edu.ycm.union.controller;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -27,8 +26,7 @@ public class AdminController {
 	
 	@POST
 	@Path("/")
-	public String getTasks(@Context HttpServletRequest request,
-						   @Context HttpServletResponse response) throws IOException{
+	public String getTasks(@Context HttpServletRequest request) throws IOException{
 		HttpSession session = request.getSession();
 		UserInfo userInfoSession = (UserInfo) session.getAttribute("userId");
 		//强制每次从缓存中取用户详情，防止前台篡改
@@ -38,7 +36,6 @@ public class AdminController {
 			return doIsAdmin(userInfo);
 		}
 		return doNotAdmin(userInfo);
-		
 	}
 
 	private String doIsAdmin(UserInfo userInfo) {

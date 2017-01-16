@@ -17,7 +17,14 @@
 			</div>
 			<div>
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="#">用户</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"> 用户管理<b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">新建用户</a></li>
+							<li class="divider"></li>
+							<li><a href="#">已有用户管理</a></li>
+						</ul>
+					</li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"> 任务管理<b class="caret"></b></a>
 						<ul class="dropdown-menu">
@@ -39,14 +46,7 @@
 	</nav>
 	
 	<div id='bodytext' class="center">
-		<div class="panel panel-default">
-	    		<div class="panel-heading">面板标题</div>
-		    <table class="table">
-		        <tr><td>产品 A</td><td>200</td></tr>
-		        <tr><td>产品 B</td><td>400</td></tr>
-		    </table>
-		</div>
-		    <button type="button" class="btn btn-primary" id="myButton4" >提交</button>
+		
 	</div>
 
 	<!-- 弹出对话框 -->
@@ -69,6 +69,6 @@
 	<!-- Javascript -->
 	<script src="../assets/js/jquery-1.11.1.min.js"></script>
 	<script src="../assets/bootstrap/js/bootstrap.min.js"></script>
-	<script src="../assets/bootstrap/js/admin.js"></script>
+	<script src="../assets/js/admin.js"></script>
 </body>
 </html>

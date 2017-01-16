@@ -33,8 +33,7 @@ public class LoginController {
 	@Path("/")
 	public String getTasks(@FormParam("username") String userID,
 						   @FormParam("password") String cellphone,
-						   @Context HttpServletRequest request,
-						   @Context HttpServletResponse response) throws IOException{
+						   @Context HttpServletRequest request) throws IOException{
 		
 		logger.info("工号为"+userID+"的用户登录");
 		

@@ -178,9 +178,9 @@ public class DatabaseOper {
 	}
 	
 	//删
-	public void deleteDocument(String collectionName, String json){
+	public void deleteDocument(String collectionName, Bson bson){
 		MongoCollection<Document> collection  = getCollection(collectionName);
-		collection.insertOne(Document.parse(json));
+		collection.deleteOne(bson);
 	}
 	
 	//增表
