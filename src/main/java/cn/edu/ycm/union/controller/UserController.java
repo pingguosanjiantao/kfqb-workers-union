@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -48,9 +49,15 @@ public class UserController {
 	
 	@POST
 	@Path("user")
-	public String createTask(){
-		String result  = "增";
-		return result;
+	public String createUser(@FormParam("newuser") String newUserJson){
+		UserInfo newUser = new Gson().fromJson(newUserJson, UserInfo.class);
+		//防止前台被人篡改
+		newUser.setAdminFlag("false");
+		logger.info("新增id为"+newUser.getId()+"的用户");
+		userService.insertUser(newUser);
+		ReturnMsg ret = new ReturnMsg();
+		ret.setStatus("0");
+		return new Gson().toJson(ret);
 	}
 	
 	@DELETE
