@@ -4,6 +4,20 @@ public class ReturnMsg {
 	
 	private String status;
 	
+	private String name;
+	
+	private String msg;
+
+	private String jumpurl;
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getStatus() {
 		return status;
 	}
@@ -12,9 +26,7 @@ public class ReturnMsg {
 		this.status = status;
 	}
 
-	private String msg;
-
-	private String jumpurl;
+	
 	public String getJumpurl() {
 		return jumpurl;
 	}

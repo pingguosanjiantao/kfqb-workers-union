@@ -51,6 +51,32 @@ $(document).ready(function(){
         },
     });
 	
+	//Jump to admin page
+	$('#adminbtn').on('click', function() {
+		//请求跳转
+		$.ajax({
+	        url: "../admin",
+	        type: "POST",
+	        cache: false,
+	    		dataType:"json",
+	        success: function(data) {
+	        		//是管理员，跳转页面
+	        		if (data.status === "0"){
+	        			window.location.href=data.jumpurl;
+	        		}else{//校验未通过，弹框提示
+	        			$('#modaltext').text(data.msg);
+	        			$('#myModal').modal();  
+	        		}
+	        },
+	        error: function() {
+	        		$('#modaltext').text("访问出错");
+    			$('#myModal').modal();  
+	        },
+	    });
+		
+	
+		
+	});
 	
 });
 

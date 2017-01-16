@@ -23,7 +23,7 @@ import cn.edu.ycm.union.userbuffer.UserMap;
 @Path("/login")
 public class LoginController {
 	
-	static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 	
 	private UserMap userMap = new UserMap();
 	

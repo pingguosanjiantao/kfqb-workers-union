@@ -7,7 +7,8 @@
 		<param-name>resteasy.resources</param-name>
 		<param-value>cn.edu.ycm.union.controller.LoginController,
 								cn.edu.ycm.union.controller.TaskController,
-								cn.edu.ycm.union.controller.UserController</param-value>
+								cn.edu.ycm.union.controller.UserController,
+								cn.edu.ycm.union.controller.AdminController</param-value>
 	</context-param>
 	
 	<!-- 容器 -->
@@ -28,7 +29,10 @@
 		<servlet-name>Resteasy</servlet-name>
 		<url-pattern>/action/*</url-pattern>
 	</servlet-mapping>
-	
+	<servlet-mapping>
+		<servlet-name>Resteasy</servlet-name>
+		<url-pattern>/admin/*</url-pattern>
+	</servlet-mapping>
 	<!-- 登录模块 -->
 	<filter>
 		<filter-name>login-filter</filter-name>
@@ -40,7 +44,7 @@
 	</filter-mapping>
 	<filter-mapping>
 		<filter-name>login-filter</filter-name>
-		<url-pattern>/page/*</url-pattern>
+		<url-pattern>/admin/*</url-pattern>
 	</filter-mapping>
 	
 	<!-- 欢迎页 -->

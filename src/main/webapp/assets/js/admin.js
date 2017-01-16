@@ -2,7 +2,7 @@
 jQuery(document).ready(function() {
 	
 	//设置背景
-    $.backstretch("assets/img/backgrounds/1.jpg");
+    $.backstretch("../assets/img/backgrounds/1.jpg");
     
     $('#loginbtn').on('click', function() {
     		//校验工号
