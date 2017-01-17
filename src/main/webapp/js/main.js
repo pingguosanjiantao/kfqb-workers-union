@@ -1,6 +1,5 @@
 /*初始化页面*/
 $(document).ready(function(){
-	alert("asfasfd");
 	/*初始化任务列表*/
 	$.ajax({
         url: "/kfqb-workers-union/action/tasks",

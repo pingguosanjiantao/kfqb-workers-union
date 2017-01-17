@@ -23,9 +23,13 @@ public class UserService {
 	private DatabaseOper databaseOper = new DatabaseOper();
 	
 	//新建一个用户
-	public void insertUser(UserInfo userInfo){
+	public boolean insertUser(UserInfo userInfo){
 		logger.info("新建"+userInfo.getId()+"用户");
-		databaseOper.insertDocument("users", new Gson().toJson(userInfo));
+		if (getUserInfoByID(userInfo.getId()) == null){//不存在该用户
+			databaseOper.insertDocument("users", new Gson().toJson(userInfo));
+			return true;
+		}
+		return false;
 	}
 	
 	//删除一个用户
