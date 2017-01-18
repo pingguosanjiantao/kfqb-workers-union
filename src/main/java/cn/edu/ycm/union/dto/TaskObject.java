@@ -6,8 +6,6 @@ public class TaskObject {
 	private String titile;
 	//填写说明
 	private String instruction;
-	//用户
-	private UserInfo user;
 	//用户填写数据
 	private TaskTable table;
 	
@@ -22,12 +20,6 @@ public class TaskObject {
 	}
 	public void setInstruction(String instruction) {
 		this.instruction = instruction;
-	}
-	public UserInfo getUser() {
-		return user;
-	}
-	public void setUser(UserInfo user) {
-		this.user = user;
 	}
 	public TaskTable getTable() {
 		return table;

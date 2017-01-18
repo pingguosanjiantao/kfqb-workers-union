@@ -1,9 +1,5 @@
 $(document).ready(function(){
 	
-	//定义一个全局变量用来存储页面数据
-	var globalData;
-	
-	
 	//新建一个用户
 	$('#newuser').on('click', function() {
 		var str=""; 
@@ -60,7 +56,7 @@ $(document).ready(function(){
 	});
 	
 	//查询所有用户
-	$('#mangerusers').on('click', function() {
+	$('#mangeusers').on('click', function() {
 		/*展示用户列表*/
 		$.ajax({
 	        url: "/kfqb-workers-union/action/users",
@@ -103,29 +99,6 @@ $(document).ready(function(){
 		    			$("#bodytext").empty();
 		    			$("#bodytext").append(str);
 
-//		    			var cnt = "0";
-//		    			
-//		    			var selector = "#admin0000";
-//	    		    		$(selector).bind('click', function() {
-//	    		    			cnt += "ooo-";
-//	    		    			alert(cnt)
-//	    		    		});
-//	    		    		var selector = "#admin2";
-//	    		    		$(selector).bind('click', function() {
-//	    		    			cnt += "ooo-";
-//	    		    			alert(cnt)
-//	    		    		});
-//	    		    		var selector = "#admin0000000";
-//	    		    		$(selector).bind('click', function() {
-//	    		    			cnt += "ooo-";
-//	    		    			alert(cnt)
-//	    		    		});
-//	    		    		var selector = "#admin999";
-//	    		    		$(selector).bind('click', function() {
-//	    		    			cnt += "ooo-";
-//	    		    			alert(cnt)
-//	    		    		});
-		    			
 		    			//重新绑定事件
 		    			for(var i=0;i<data.users.length;i++){  
 		    		    		//绑定设置管理员事件
@@ -219,6 +192,5 @@ $(document).ready(function(){
         str += '}';
         return str;
     }
-	
 	
 });
