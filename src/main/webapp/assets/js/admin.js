@@ -1,5 +1,4 @@
 $(document).ready(function(){
-	
 	//新建一个用户
 	$('#newuser').on('click', function() {
 		var str=""; 
@@ -39,7 +38,7 @@ $(document).ready(function(){
 	    	        		if (data.status === "0"){
 	    	        			$('#modaltext').text("添加成功");
 	    	        			$('#myModal').modal();
-	    	        			$("#mangerusers").click();
+	    	        			$("#mangeusers").click();
 	    	        		}else{
 	    	        			$('#modaltext').text(data.msg);
 	    	        			$('#myModal').modal();  
@@ -125,7 +124,7 @@ $(document).ready(function(){
 				    	    	        				$('#modaltext').text("取消管理员成功");
 				    	    	        			}
 				    	    	        			$('#myModal').modal();
-				    	    	        			$("#mangerusers").click();
+				    	    	        			$("#mangeusers").click();
 				    	    	        		}else{
 				    	    	        			$('#modaltext').text(data.msg);
 				    	    	        			$('#myModal').modal();  
@@ -152,7 +151,7 @@ $(document).ready(function(){
 				    	    	        		if (data.status === "0"){
 				    	    	        			$('#modaltext').text("删除成功");
 				    	    	        			$('#myModal').modal();
-				    	    	        			$("#mangerusers").click();
+				    	    	        			$("#mangeusers").click();
 				    	    	        		}else{
 				    	    	        			$('#modaltext').text(data.msg);
 				    	    	        			$('#myModal').modal();  
@@ -174,6 +173,85 @@ $(document).ready(function(){
 	        		window.location.href='../';
 	        },
 	    });
+	});
+	
+	//新建一个任务
+	$('#newtask').on('click', function() {
+		var str=""; 
+		str += '<div id="newtaskbody">';
+		str += '<input type="text" class="form-control" id="titile" placeholder="统计项目名称">';
+		str += '<input type="text" class="form-control" id="instruction" placeholder="统计描述：如截止时间">';
+		str += '<div class="panel panel-default">';
+	    	str +=	    '<table id="newtasktable" class="table">';
+	    	str += 			'<thead>';
+	    	str += 				'<tr class="active">';
+		str +=	    				'<td>统计项名称</td>';
+		str +=	  		  		'<td>提示语</td>';
+		str += 				'</tr>';
+		str += 			'</thead>';
+		str += 			'<tr>';
+		str +=	    			'<td><input type="text" class="form-control" id="key" placeholder="显示为统计项名称"></td>';
+		str +=	    			'<td><input type="text" class="form-control" id="tip" placeholder="显示为提示语，如填选项等"></td>';
+		str += 			'</tr>';
+		str +=     '</table>';
+		str += '</div>';
+		str += '<td>';
+		str += '<button type="button" class="btn btn-default" id="newline">';
+	    str += '<span class="glyphicon glyphicon-plus"></span> 新增一行';
+	    str += '</button>';
+	    str += '<button type="button" class="btn btn-default" id="delline">';
+	    str += '<span class="glyphicon glyphicon-minus"></span> 删除末行';
+	    str += '</button>';
+		str += '<button type="button" class="btn btn-primary" id="submitnewtaskbtn" >新建任务</button>';
+		str += '</td>';
+		str += '</div>';
+		$("#bodytext").unbind();
+		$("#bodytext").empty();
+		$("#bodytext").append(str);
+		
+	    	//新增一行
+	    	$("#newline").on('click', function() {
+	    		var str = '';
+	    		str += '';
+	    		str += 			'<tr>';
+	    		str +=	    			'<td><input type="text" class="form-control" id="key" placeholder="显示为统计项名称"></td>';
+	    		str +=	    			'<td><input type="text" class="form-control" id="tip" placeholder="显示为提示语，如填选项等"></td>';
+	    		str += 			'</tr>';
+	    		$("#newtasktable").append(str);
+	    	});
+
+	    	//删除末行
+	    	$("#delline").on('click', function() {
+	    		$("#newtasktable tr:last").remove();
+	    	});
+		var selector = '#'+"submitnewtaskbtn";
+	    	//重新绑定事件
+	    	$(selector).on('click', function() {
+	    		/*请求任务页面*/
+	    		$.ajax({
+	    			url: "/kfqb-workers-union/action/user",
+	    	        type: "POST",
+	    	        cache: false,
+	    	    		dataType:"json",
+	    	    		data:{"newuser":GetNewUserTableData()},
+	    	        success: function(data) {
+	    	        		if (data.status === "0"){
+	    	        			$('#modaltext').text("添加成功");
+	    	        			$('#myModal').modal();
+	    	        			$("#mangeusers").click();
+	    	        		}else{
+	    	        			$('#modaltext').text(data.msg);
+	    	        			$('#myModal').modal();  
+	    	        		}
+	    	        },
+	    	        error: function() {
+	    	        		$('#modaltext').text("访问出错");
+            			$('#myModal').modal();  
+	    	        },
+	    	    });
+	    		
+	    	});
+		
 	});
 	
 	
