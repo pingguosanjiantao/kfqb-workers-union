@@ -11,7 +11,6 @@ body {
     margin-top: 60px;
 	margin-left: auto;  
     margin-right: auto;
-	width:800px;
 }
 #newline{
 	float: left;
@@ -35,9 +34,30 @@ body {
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
+#newuserbody{
+	margin-top: 60px;
+	margin-left: auto;  
+    margin-right: auto;
+	width:800px;
+}
+#usersbody{
+	margin-top: 60px;
+	margin-left: auto;  
+    margin-right: auto;
+	width:800px;
+}
 #newtaskbody{
 	margin-top: 60px;
 	margin-left: auto;  
     margin-right: auto;
 	width:500px;
+}
+#tasksbody{
+	margin-top: 60px;
+	margin-left: auto;  
+    margin-right: auto;
+	width:1000px;
+}
+#taskpanel{
+	margin-bottom: 0px;
 }

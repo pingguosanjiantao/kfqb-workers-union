@@ -1,52 +1,73 @@
 $(document).ready(function(){
-	//新建一个用户
-	$('#newuser').on('click', function() {
+	
+	//新建一个任务
+	$('#newtask').on('click', function() {
 		var str=""; 
-		str += '<div class="panel panel-default">';
-	    	str +=	    '<table id="newusertable" class="table">';
-	    	str += 			'<thead>';
-	    	str += 				'<tr class="active">';
-		str +=	    				'<td>工号</td>';
-		str +=	  		  		'<td>姓名</td>';
-		str +=	    				'<td>团队</td>';
-		str +=	    				'<td>手机号</td>';
-		str += 				'</tr>';
-		str += 			'</thead>';
+		str += '<div id="newtaskbody">';
+		str += '<div class="panel panel-default id="newtaskbody">';
+		str += '<input type="text" class="form-control" id="taskTitle" placeholder="统计项目名称">';
+		str += '<input type="text" class="form-control" id="instruction" placeholder="统计描述：如截止时间、适用人群">';
+		str += '<div class="panel panel-default" id="taskpanel">';
+	    	str +=	    '<table id="newtasktable" class="table">';
 		str += 			'<tr>';
-		str +=	    			'<td><input type="text" class="form-control" id="id" placeholder="工号"></td>';
-		str +=	    			'<td><input type="text" class="form-control" id="name" placeholder="姓名"></td>';
-		str +=	    			'<td><input type="text" class="form-control" id="team" placeholder="团队"></td>';
-		str +=	    			'<td><input type="text" class="form-control" id="cellphone" placeholder="手机号"></td>';
+		str +=	    			'<td><input type="text" class="form-control" id="key" placeholder="显示为统计项名称"></td>';
+		str +=	    			'<td><input type="text" class="form-control" id="tip" placeholder="显示为提示语，如是/否等"></td>';
 		str += 			'</tr>';
 		str +=     '</table>';
-		str +='</div>';
-		str += '<td><button type="button" class="btn btn-primary" id="newuserbtn" >新建用户</button></td>';
+		str += '</div>';
+		str += '<td>';
+		str += '<button type="button" class="btn btn-default" id="newline">';
+	    str += '<span class="glyphicon glyphicon-plus"></span> 新增一行';
+	    str += '</button>';
+	    str += '<button type="button" class="btn btn-default" id="delline">';
+	    str += '<span class="glyphicon glyphicon-minus"></span> 删除末行';
+	    str += '</button>';
+		str += '<button type="button" class="btn btn-primary" id="submitnewtaskbtn" >新建任务</button>';
+		str += '</td>';
+		str += '</div>';
+		str += '</div>'
 		$("#bodytext").unbind();
 		$("#bodytext").empty();
 		$("#bodytext").append(str);
-		var selector = '#'+"newuserbtn";
+		
+	    	//新增一行
+	    	$("#newline").on('click', function() {
+	    		var str = '';
+	    		str += '';
+	    		str += '<tr>';
+	    		str +=	  '<td><input type="text" class="form-control" id="key" placeholder="显示为统计项名称"></td>';
+	    		str +=	  '<td><input type="text" class="form-control" id="tip" placeholder="显示为提示语，如填选项等"></td>';
+	    		str += 	'</tr>';
+	    		$("#newtasktable").append(str);
+	    	});
+
+	    	//删除末行
+	    	$("#delline").on('click', function() {
+	    		$("#newtasktable tr:last").remove();
+	    	});
+	    	var selector = '#'+"submitnewtaskbtn";
 	    	//重新绑定事件
 	    	$(selector).on('click', function() {
 	    		/*请求任务页面*/
 	    		$.ajax({
-	    			url: "/kfqb-workers-union/action/user",
+	    			url: "/kfqb-workers-union/action/task",
 	    	        type: "POST",
 	    	        cache: false,
 	    	    		dataType:"json",
-	    	    		data:{"newuser":GetNewUserTableData()},
+	    	    		data:{"newtask":GetNewTaskTableData()},
 	    	        success: function(data) {
 	    	        		if (data.status === "0"){
-	    	        			$('#modaltext').text("添加成功");
+	    	        			$('#modaltext').text("新建任务成功");
 	    	        			$('#myModal').modal();
-	    	        			$("#mangeusers").click();
+	    	        			$("#managetasks").click();
 	    	        		}else{
 	    	        			$('#modaltext').text(data.msg);
 	    	        			$('#myModal').modal();  
 	    	        		}
 	    	        },
 	    	        error: function() {
-	    	        		$('#modaltext').text("访问出错");
-            			$('#myModal').modal();  
+	    	        	$('#modaltext').text("访问出错");
+	    	        	$('#myModal').modal();  
 	    	        },
 	    	    });
 	    		
@@ -54,74 +75,104 @@ $(document).ready(function(){
 		
 	});
 	
-	//查询所有用户
-	$('#mangeusers').on('click', function() {
+	//遍历新建任务表格
+	function GetNewTaskTableData(){
+        var str = '';
+        str += '{';
+        str += '"taskTitle":"'+$("#taskTitle").val()+'",';
+        str += '"instruction":"'+$('#instruction').val()+'",';
+        str += '"table":{';
+        str += '"lines":[';
+        $("#newtasktable tr").each(function(trindex,tritem){
+        	str += '{';
+        	$(tritem).find("td input").each(function(tdindex,tditem){
+        		str += '"' + tditem.id + '":"' + tditem.value + '",';
+        	});
+        	str += '"value":"",';
+    		str += '"valueType":"",';
+    		str += '"valueTypeText":""';	
+        	str += '},';
+        });
+        //去掉最后一个逗号
+        str = str.substring(0,str.length-1)
+        str += ']';
+        str += '}';
+        str += '}';
+        return str;
+    }
+	
+	//查询所有任务
+	$('#managetasks').on('click', function() {
 		/*展示用户列表*/
 		$.ajax({
-	        url: "/kfqb-workers-union/action/users",
+	        url: "/kfqb-workers-union/action/tasks",
 	        type: "GET",
 	        cache: false,
-	    		dataType:"json",
+	    	dataType:"json",
 	        success: function(data) {
 		        	//校验通过，跳转页面
 		    		if (data.status === "0"){
 		    			$("#bodytext").empty();
 		    			var str="";  
+		    			str += '<div id="tasksbody">';
 		    			str += '<div class="panel panel-default">';
-		    		    	str +=	    '<table class="table" id="userinfo">';
-		    		    	str += '<thead>';
-		    		    	str += '<tr class="active">';
-	    		    		str +=	    '<td>工号</td>';
-	    		    		str +=	    '<td>姓名</td>';
-	    		    		str +=	    '<td>团队</td>';
-	    		    		str +=	    '<td>手机号</td>';
-	    		    		str +=	    '<td>管理员</td>';
-	    		    		str +=	    '<td>操作</td>';
+	    		    	str +=	    '<table class="table" id="userinfo">';
+	    		    	str += '<thead>';
+	    		    	str += '<tr class="active">';
+    		    		str +=	    '<td>任务编号</td>';
+    		    		str +=	    '<td>任务名称</td>';
+    		    		str +=	    '<td>创建者</td>';
+    		    		str +=	    '<td>是否有效</td>';
+    		    		str +=	    '<td>删除操作</td>';
+    		    		str +=	    '<td>导出统计数据</td>';
+    		    		str +=	    '<td>复制操作</td>';
+    		    		str += '</tr>';
+    		    		str += '</thead>';
+	    		    	for(var i=0;i<data.tasks.length;i++){  
+	    		    		str += '<tr>';
+	    		    		str +=	    '<td>'+data.tasks[i].taskID+'</td>';
+	    		    		str +=	    '<td>'+data.tasks[i].taskObject.taskTitle+'</td>';
+	    		    		str +=	    '<td>'+data.tasks[i].createrName+'</td>';
+	    		    		if (data.tasks[i].validFlag === "true"){
+	    		    			str +=     '<td><button type="button" class="btn btn-primary"  id="taskValid'+data.tasks[i].taskID+'" >设为有效</button></td>';
+	    		    		}else{
+	    		    			str +=     '<td><button type="button" class="btn btn-success" id="taskValid'+data.tasks[i].taskID+'" >设为无效</button></td>';
+	    		    		}
+	    		    		str +=     '<td><button type="button" class="btn btn-danger"  id="del'+data.tasks[i].taskID+'" >删除任务</button></td>';
+	    		    		str +=     '<td><button type="button" class="btn btn-warning" id="out'+data.tasks[i].taskID+'" >导出EXCEL</button></td>';
+	    		    		str +=     '<td><button type="button" class="btn btn-primary" id="cpy'+data.tasks[i].taskID+'" >复制任务</button></td>';
 	    		    		str += '</tr>';
-	    		    		str += '</thead>';
-		    		    	for(var i=0;i<data.users.length;i++){  
-		    		    		str += '<tr>';
-		    		    		str +=	    '<td>'+data.users[i].id+'</td>';
-		    		    		str +=	    '<td>'+data.users[i].name+'</td>';
-		    		    		str +=	    '<td>'+data.users[i].team+'</td>';
-		    		    		str +=	    '<td>'+data.users[i].cellphone+'</td>';
-		    		    		if (data.users[i].adminFlag === "true"){
-		    		    			str +=     '<td><button type="button" class="btn btn-primary"  id="admin'+data.users[i].id+'" >取消管理员</button></td>';
-		    		    		}else{
-		    		    			str +=     '<td><button type="button" class="btn btn-success" id="admin'+data.users[i].id+'" >设为管理员</button></td>';
-		    		    		}
-		    		    		str +=     '<td><button type="button" class="btn btn-danger" id="del'+data.users[i].id+'" >删除用户</button></td>';
-		    		    		str += '</tr>';
-		    		    	}
-		    			str +=     '</table>';
-		    			str +='</div>';
+	    		    	}
+		    			str += '</table>';
+		    			str += '</div>';
+		    			str += '</div>';
 		    			$("#bodytext").empty();
 		    			$("#bodytext").append(str);
 
 		    			//重新绑定事件
-		    			for(var i=0;i<data.users.length;i++){  
-		    		    		//绑定设置管理员事件
-		    		    		$("#admin"+data.users[i].id).bind('click',data.users[i],function(event) {
-		    		    			var user = event.data;
-		    		    			var isAdmin = 'true';
-			    		    		if (user.adminFlag === "true"){
+		    			for(var i=0;i<data.tasks.length;i++){  
+		    		    		//绑定设置有效
+		    		    		$("#taskValid"+data.tasks[i].taskID).bind('click',data.tasks[i],function(event) {
+		    		    			var task = event.data;
+		    		    			var validFlag = 'true';
+			    		    		if (task.validFlag === "true"){
 			    		    			isAdmin = 'false';
 			    		    		}
-			    		    		var reqdata = '{"id":'+user.id+',"name":'+user.name+',"team":'+user.team+',"cellphone":'+user.cellphone+',"adminFlag":'+isAdmin+'}';
+			    		    		var reqdata = '{"taskID":'+task.taskID+',"createrName":'+task.createrName+',"validFlag":'+task.validFlag+',"taskObject":'+task.taskObject+'}';
 				    	    		/*请求任务页面*/
-			    		    		var requrl = "/kfqb-workers-union/action/user/"+user.id;
+			    		    		var requrl = "/kfqb-workers-union/action/task/"+task.taskID;
 				    	    		$.ajax({
 				    	    			url: requrl,
 				    	    	        type: "PUT",
 				    	    	        cache: false,
-				    	    	    		dataType:"json",
-				    	    	    		data:{"newuser":reqdata},
+				    	    	    	dataType:"json",
+				    	    	    	data:{"newuser":reqdata},
 				    	    	        success: function(data) {
 				    	    	        		if (data.status === "0"){
 				    	    	        			if (isAdmin==="true"){
-				    	    	        				$('#modaltext').text("设置管理员成功");
+				    	    	        				$('#modaltext').text("设置任务有效成功");
 				    	    	        			}else{
-				    	    	        				$('#modaltext').text("取消管理员成功");
+				    	    	        				$('#modaltext').text("取消任务有效成功");
 				    	    	        			}
 				    	    	        			$('#myModal').modal();
 				    	    	        			$("#mangeusers").click();
@@ -137,16 +188,43 @@ $(document).ready(function(){
 				    	    	    });
 				    	    	});
 		    		    		
-				    	    	//绑定删除用户事件
-				    	    	$("#del"+data.users[i].id).on('click',data.users[i], function(event) {
-				    	    		var user = event.data;
-				    	    		var requrl = "/kfqb-workers-union/action/user/"+user.id;
+				    	    	//绑定删除任务事件
+				    	    	$("#del"+data.tasks[i].taskID).on('click',data.tasks[i], function(event) {
+				    	    		var task = event.data;
+				    	    		var requrl = "/kfqb-workers-union/action/user/"+task.taskID;
 				    	    		/*请求任务页面*/
 				    	    		$.ajax({
 				    	    			url: requrl,
 				    	    	        type: "DELETE",
 				    	    	        cache: false,
-				    	    	    		dataType:"json",
+				    	    	        dataType:"json",
+				    	    	        success: function(data) {
+				    	    	        		if (data.status === "0"){
+				    	    	        			$('#modaltext').text("删除成功");
+				    	    	        			$('#myModal').modal();
+				    	    	        			$("#mangeusers").click();
+				    	    	        		}else{
+				    	    	        			$('#modaltext').text(data.msg);
+				    	    	        			$('#myModal').modal();  
+				    	    	        		}
+				    	    	        },
+				    	    	        error: function() {
+				    	    	        		$('#modaltext').text("访问出错");
+				                		$('#myModal').modal();  
+				    	    	        },
+				    	    	    });
+				    	    	});
+				    	    	
+				    	    	//绑定复制任务事件
+				    	    	$("#del"+data.tasks[i].taskID).on('click',data.tasks[i], function(event) {
+				    	    		var task = event.data;
+				    	    		var requrl = "/kfqb-workers-union/action/user/"+task.taskID;
+				    	    		/*请求任务页面*/
+				    	    		$.ajax({
+				    	    			url: requrl,
+				    	    	        type: "DELETE",
+				    	    	        cache: false,
+				    	    	        dataType:"json",
 				    	    	        success: function(data) {
 				    	    	        		if (data.status === "0"){
 				    	    	        			$('#modaltext').text("删除成功");
@@ -175,100 +253,17 @@ $(document).ready(function(){
 	    });
 	});
 	
-	//新建一个任务
-	$('#newtask').on('click', function() {
-		var str=""; 
-		str += '<div id="newtaskbody">';
-		str += '<input type="text" class="form-control" id="titile" placeholder="统计项目名称">';
-		str += '<input type="text" class="form-control" id="instruction" placeholder="统计描述：如截止时间">';
-		str += '<div class="panel panel-default">';
-	    	str +=	    '<table id="newtasktable" class="table">';
-	    	str += 			'<thead>';
-	    	str += 				'<tr class="active">';
-		str +=	    				'<td>统计项名称</td>';
-		str +=	  		  		'<td>提示语</td>';
-		str += 				'</tr>';
-		str += 			'</thead>';
-		str += 			'<tr>';
-		str +=	    			'<td><input type="text" class="form-control" id="key" placeholder="显示为统计项名称"></td>';
-		str +=	    			'<td><input type="text" class="form-control" id="tip" placeholder="显示为提示语，如填选项等"></td>';
-		str += 			'</tr>';
-		str +=     '</table>';
-		str += '</div>';
-		str += '<td>';
-		str += '<button type="button" class="btn btn-default" id="newline">';
-	    str += '<span class="glyphicon glyphicon-plus"></span> 新增一行';
-	    str += '</button>';
-	    str += '<button type="button" class="btn btn-default" id="delline">';
-	    str += '<span class="glyphicon glyphicon-minus"></span> 删除末行';
-	    str += '</button>';
-		str += '<button type="button" class="btn btn-primary" id="submitnewtaskbtn" >新建任务</button>';
-		str += '</td>';
-		str += '</div>';
-		$("#bodytext").unbind();
-		$("#bodytext").empty();
-		$("#bodytext").append(str);
-		
-	    	//新增一行
-	    	$("#newline").on('click', function() {
-	    		var str = '';
-	    		str += '';
-	    		str += 			'<tr>';
-	    		str +=	    			'<td><input type="text" class="form-control" id="key" placeholder="显示为统计项名称"></td>';
-	    		str +=	    			'<td><input type="text" class="form-control" id="tip" placeholder="显示为提示语，如填选项等"></td>';
-	    		str += 			'</tr>';
-	    		$("#newtasktable").append(str);
-	    	});
-
-	    	//删除末行
-	    	$("#delline").on('click', function() {
-	    		$("#newtasktable tr:last").remove();
-	    	});
-		var selector = '#'+"submitnewtaskbtn";
-	    	//重新绑定事件
-	    	$(selector).on('click', function() {
-	    		/*请求任务页面*/
-	    		$.ajax({
-	    			url: "/kfqb-workers-union/action/user",
-	    	        type: "POST",
-	    	        cache: false,
-	    	    		dataType:"json",
-	    	    		data:{"newuser":GetNewUserTableData()},
-	    	        success: function(data) {
-	    	        		if (data.status === "0"){
-	    	        			$('#modaltext').text("添加成功");
-	    	        			$('#myModal').modal();
-	    	        			$("#mangeusers").click();
-	    	        		}else{
-	    	        			$('#modaltext').text(data.msg);
-	    	        			$('#myModal').modal();  
-	    	        		}
-	    	        },
-	    	        error: function() {
-	    	        		$('#modaltext').text("访问出错");
-            			$('#myModal').modal();  
-	    	        },
-	    	    });
-	    		
-	    	});
-		
-	});
 	
 	
-	//遍历一个表格
-	function GetNewUserTableData(){
-        var str = '';
-        str += '{';
-        $("#newusertable tr td input").each(function(trindex,tritem){
-	    		str += '"';
-	    		str += tritem.id;
-	    		str += '":"';
-	    		str += tritem.value;
-	    		str += '",';
-        });
-        str += '"adminFlag":"false"';
-        str += '}';
-        return str;
-    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 });

@@ -29,14 +29,16 @@ public class TaskService {
 	private UserService userService = new UserService();
 	
 	//增
-	public void createTask(TaskObject taskObject){
+	public void createTask(TaskObject taskObject,String creater){
 		logger.info("新建一个统计任务");
 		String taskID = GenerateID.getID();
 		//在tasks中插入一条数据
 		TaskTemplate taskTemplate = new TaskTemplate();
 		taskTemplate.setTaskID(taskID);
+		taskTemplate.setValidFlag("true");
+		taskTemplate.setCreaterName(creater);
 		taskTemplate.setTaskObject(taskObject);
-		databaseOper.insertDocument("users", new Gson().toJson(taskTemplate));
+		databaseOper.insertDocument("tasks", new Gson().toJson(taskTemplate));
 		//再新建一个collection
 		String collectionName = "task"+taskID;
 		databaseOper.createCollection(collectionName);
@@ -48,7 +50,7 @@ public class TaskService {
 		logger.info("删除一个统计任务");
 		//删除tasks中的任务
 		Bson bson = Filters.eq("taskID",taskID);
-		databaseOper.deleteDocument("users", bson);
+		databaseOper.deleteDocument("tasks", bson);
 		//删除task+taskID Document
 		databaseOper.deleteCollection("task"+taskID);
 	}
@@ -67,12 +69,12 @@ public class TaskService {
 	}
 
 	//全查
-	public List<TaskObject> getTasks(){
+	public List<TaskTemplate> getTasks(){
 		logger.info("查询所有统计任务");
 		MongoCursor<Document> result = databaseOper.getDocument("tasks").iterator();
-		List<TaskObject> ret = new ArrayList<>();
+		List<TaskTemplate> ret = new ArrayList<>();
 		while (result.hasNext()){
-			TaskObject tmp = new Gson().fromJson(result.next().toJson(),TaskObject.class);
+			TaskTemplate tmp = new Gson().fromJson(result.next().toJson(),TaskTemplate.class);
 			ret.add(tmp);
 		}
 		return ret;

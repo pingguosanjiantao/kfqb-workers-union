@@ -14,11 +14,11 @@ public class ReturnMsg {
 	
 	private List<UserInfo> users;
 	
-	private List<TaskObject> tasks;
+	private List<TaskTemplate> tasks;
 	
 	private UserInfo user;
 	
-	private TaskObject task;
+	private TaskTemplate task;
 	
 	public List<UserInfo> getUsers() {
 		return users;
@@ -28,13 +28,7 @@ public class ReturnMsg {
 		this.users = users;
 	}
 
-	public List<TaskObject> getTasks() {
-		return tasks;
-	}
 
-	public void setTasks(List<TaskObject> tasks) {
-		this.tasks = tasks;
-	}
 
 	public UserInfo getUser() {
 		return user;
@@ -44,11 +38,21 @@ public class ReturnMsg {
 		this.user = user;
 	}
 
-	public TaskObject getTask() {
+
+
+	public List<TaskTemplate> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<TaskTemplate> tasks) {
+		this.tasks = tasks;
+	}
+
+	public TaskTemplate getTask() {
 		return task;
 	}
 
-	public void setTask(TaskObject task) {
+	public void setTask(TaskTemplate task) {
 		this.task = task;
 	}
 

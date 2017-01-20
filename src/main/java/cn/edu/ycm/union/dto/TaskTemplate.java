@@ -4,6 +4,22 @@ public class TaskTemplate {
 	
 	//任务编号
 	private String taskID;
+	//创建者
+	private String createrName;
+	//有效
+	private String validFlag;
+	public String getCreaterName() {
+		return createrName;
+	}
+	public void setCreaterName(String createrName) {
+		this.createrName = createrName;
+	}
+	public String getValidFlag() {
+		return validFlag;
+	}
+	public void setValidFlag(String validFlag) {
+		this.validFlag = validFlag;
+	}
 	//任务对象
 	private TaskObject taskObject;
 	

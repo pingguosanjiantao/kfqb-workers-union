@@ -3,17 +3,17 @@ package cn.edu.ycm.union.dto;
 public class TaskObject {
 	
 	//任务标题
-	private String titile;
+	private String taskTitle;
 	//填写说明
 	private String instruction;
 	//用户填写数据
 	private TaskTable table;
 	
-	public String getTitile() {
-		return titile;
+	public String getTaskTitle() {
+		return taskTitle;
 	}
-	public void setTitile(String titile) {
-		this.titile = titile;
+	public void setTaskTitle(String taskTitle) {
+		this.taskTitle = taskTitle;
 	}
 	public String getInstruction() {
 		return instruction;
