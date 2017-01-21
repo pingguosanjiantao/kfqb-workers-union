@@ -33,7 +33,6 @@ $(document).ready(function(){
 	    	//新增一行
 	    	$("#newline").on('click', function() {
 	    		var str = '';
-	    		str += '';
 	    		str += '<tr>';
 	    		str +=	  '<td><input type="text" class="form-control" id="key" placeholder="显示为统计项名称"></td>';
 	    		str +=	  '<td><input type="text" class="form-control" id="tip" placeholder="显示为提示语，如填选项等"></td>';
@@ -134,9 +133,9 @@ $(document).ready(function(){
 	    		    		str +=	    '<td>'+data.tasks[i].taskObject.taskTitle+'</td>';
 	    		    		str +=	    '<td>'+data.tasks[i].createrName+'</td>';
 	    		    		if (data.tasks[i].validFlag === "true"){
-	    		    			str +=     '<td><button type="button" class="btn btn-primary"  id="taskValid'+data.tasks[i].taskID+'" >设为有效</button></td>';
+	    		    			str +=     '<td><button type="button" class="btn btn-primary"  id="taskValid'+data.tasks[i].taskID+'" >设为无效</button></td>';
 	    		    		}else{
-	    		    			str +=     '<td><button type="button" class="btn btn-success" id="taskValid'+data.tasks[i].taskID+'" >设为无效</button></td>';
+	    		    			str +=     '<td><button type="button" class="btn btn-success" id="taskValid'+data.tasks[i].taskID+'" >设为有效</button></td>';
 	    		    		}
 	    		    		str +=     '<td><button type="button" class="btn btn-danger"  id="del'+data.tasks[i].taskID+'" >删除任务</button></td>';
 	    		    		str +=     '<td><button type="button" class="btn btn-warning" id="out'+data.tasks[i].taskID+'" >导出EXCEL</button></td>';
@@ -154,11 +153,11 @@ $(document).ready(function(){
 		    		    		//绑定设置有效
 		    		    		$("#taskValid"+data.tasks[i].taskID).bind('click',data.tasks[i],function(event) {
 		    		    			var task = event.data;
-		    		    			var validFlag = 'true';
+		    		    			var validFlag = "true";
 			    		    		if (task.validFlag === "true"){
-			    		    			isAdmin = 'false';
+			    		    			validFlag = "false";
 			    		    		}
-			    		    		var reqdata = '{"taskID":'+task.taskID+',"createrName":'+task.createrName+',"validFlag":'+task.validFlag+',"taskObject":'+task.taskObject+'}';
+			    		    		var reqdata = ''+validFlag+'';
 				    	    		/*请求任务页面*/
 			    		    		var requrl = "/kfqb-workers-union/action/task/"+task.taskID;
 				    	    		$.ajax({
@@ -166,16 +165,16 @@ $(document).ready(function(){
 				    	    	        type: "PUT",
 				    	    	        cache: false,
 				    	    	    	dataType:"json",
-				    	    	    	data:{"newuser":reqdata},
+				    	    	    	data:{"validFlag":reqdata},
 				    	    	        success: function(data) {
 				    	    	        		if (data.status === "0"){
-				    	    	        			if (isAdmin==="true"){
+				    	    	        			if (validFlag==="true"){
 				    	    	        				$('#modaltext').text("设置任务有效成功");
 				    	    	        			}else{
 				    	    	        				$('#modaltext').text("取消任务有效成功");
 				    	    	        			}
 				    	    	        			$('#myModal').modal();
-				    	    	        			$("#mangeusers").click();
+				    	    	        			$("#managetasks").click();
 				    	    	        		}else{
 				    	    	        			$('#modaltext').text(data.msg);
 				    	    	        			$('#myModal').modal();  
@@ -183,7 +182,7 @@ $(document).ready(function(){
 				    	    	        },
 				    	    	        error: function() {
 				    	    	        		$('#modaltext').text("访问出错");
-				                		$('#myModal').modal();  
+				    	    	        		$('#myModal').modal();  
 				    	    	        },
 				    	    	    });
 				    	    	});
@@ -191,7 +190,7 @@ $(document).ready(function(){
 				    	    	//绑定删除任务事件
 				    	    	$("#del"+data.tasks[i].taskID).on('click',data.tasks[i], function(event) {
 				    	    		var task = event.data;
-				    	    		var requrl = "/kfqb-workers-union/action/user/"+task.taskID;
+				    	    		var requrl = "/kfqb-workers-union/action/task/"+task.taskID;
 				    	    		/*请求任务页面*/
 				    	    		$.ajax({
 				    	    			url: requrl,
@@ -202,7 +201,7 @@ $(document).ready(function(){
 				    	    	        		if (data.status === "0"){
 				    	    	        			$('#modaltext').text("删除成功");
 				    	    	        			$('#myModal').modal();
-				    	    	        			$("#mangeusers").click();
+				    	    	        			$("#managetasks").click();
 				    	    	        		}else{
 				    	    	        			$('#modaltext').text(data.msg);
 				    	    	        			$('#myModal').modal();  
@@ -210,37 +209,32 @@ $(document).ready(function(){
 				    	    	        },
 				    	    	        error: function() {
 				    	    	        		$('#modaltext').text("访问出错");
-				                		$('#myModal').modal();  
+				    	    	        		$('#myModal').modal();  
 				    	    	        },
 				    	    	    });
 				    	    	});
 				    	    	
 				    	    	//绑定复制任务事件
-				    	    	$("#del"+data.tasks[i].taskID).on('click',data.tasks[i], function(event) {
+				    	    	$("#cpy"+data.tasks[i].taskID).on('click',data.tasks[i], function(event) {
 				    	    		var task = event.data;
-				    	    		var requrl = "/kfqb-workers-union/action/user/"+task.taskID;
-				    	    		/*请求任务页面*/
-				    	    		$.ajax({
-				    	    			url: requrl,
-				    	    	        type: "DELETE",
-				    	    	        cache: false,
-				    	    	        dataType:"json",
-				    	    	        success: function(data) {
-				    	    	        		if (data.status === "0"){
-				    	    	        			$('#modaltext').text("删除成功");
-				    	    	        			$('#myModal').modal();
-				    	    	        			$("#mangeusers").click();
-				    	    	        		}else{
-				    	    	        			$('#modaltext').text(data.msg);
-				    	    	        			$('#myModal').modal();  
-				    	    	        		}
-				    	    	        },
-				    	    	        error: function() {
-				    	    	        		$('#modaltext').text("访问出错");
-				                		$('#myModal').modal();  
-				    	    	        },
-				    	    	    });
+				    	    		$("#newtask").click();
+				    	    		$("#taskTitle").val(task.taskObject.taskTitle);
+				    	    		$("#instruction").val(task.taskObject.instruction);
+				    	    		$("#newtasktable").empty();
+				    	    		
+				    	    		for(var i=0;i<task.taskObject.table.lines.length;i++){ 
+				    	    			var str = '';
+				    	    			str += '<tr>';
+				    	    			str +=	  '<td><input type="text" class="form-control" id="key" placeholder="显示为统计项名称" value="'+task.taskObject.table.lines[i].key+'"></td>';
+				    	    			str +=	  '<td><input type="text" class="form-control" id="tip" placeholder="显示为提示语，如填选项等" value="'+task.taskObject.table.lines[i].tip+'"></td>';
+				    	    			str += 	'</tr>';
+				    	    			$("#newtasktable").append(str);
+				    	    		}
 				    	    	});
+				    	    	
+				    	    	//绑定导出EXCEL事件
+				    	    	
+				    	    	
 	    		    	}
 		    		}else{//校验未通过，弹框提示
 		    			$('#modaltext').text(data.msg);
@@ -252,18 +246,5 @@ $(document).ready(function(){
 	        },
 	    });
 	});
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 });

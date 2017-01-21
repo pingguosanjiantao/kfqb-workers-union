@@ -18,8 +18,16 @@ public class ReturnMsg {
 	
 	private UserInfo user;
 	
-	private TaskTemplate task;
+	private TaskTemplate taskTemplate;
 	
+	public TaskTemplate getTaskTemplate() {
+		return taskTemplate;
+	}
+
+	public void setTaskTemplate(TaskTemplate taskTemplate) {
+		this.taskTemplate = taskTemplate;
+	}
+
 	public List<UserInfo> getUsers() {
 		return users;
 	}
@@ -46,14 +54,6 @@ public class ReturnMsg {
 
 	public void setTasks(List<TaskTemplate> tasks) {
 		this.tasks = tasks;
-	}
-
-	public TaskTemplate getTask() {
-		return task;
-	}
-
-	public void setTask(TaskTemplate task) {
-		this.task = task;
 	}
 
 	public String getName() {

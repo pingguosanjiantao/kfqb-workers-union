@@ -47,7 +47,6 @@ public class TaskController {
 	@Path("task")
 	public String createTask(@FormParam("newtask") String newTaskJson,
 		      			     @Context HttpServletRequest request){
-		logger.info("");
 		//反序列化为对象
 		TaskObject taskObject = (TaskObject) JsonTool.String2Json(newTaskJson, TaskObject.class);
 		logger.info("新增任务:"+JsonTool.Json2String(taskObject));
@@ -59,38 +58,61 @@ public class TaskController {
 	}
 	
 	@DELETE
-	@Path("task/{id}")
-	public String delateTask(@PathParam("id") String id){
-		System.out.println("request 删");
-		String result  = "删";
-		return result;
+	@Path("task/{taskID}")
+	public String delateTask(@PathParam("taskID") String taskID,
+							 @Context HttpServletRequest request){
+		logger.info("删除任务:"+taskID);
+		if (!UserTool.isAdmin(request)){
+			return ReturnTool.getFailedStringReturn("没有权限");
+		}
+		taskService.delTask(taskID);
+		return ReturnTool.getSuccStringReturn();
 	}
 	
+	/**
+	 * 任务只支持修改有效标识
+	 * @param validFlag
+	 * @return
+	 */
 	@PUT
-	@Path("task/{id}")
-	public String updateTask(@PathParam("id") String id){
-		System.out.println("request 改");
-		String result  = "改";
-		return result;
+	@Path("task/{taskID}")
+	public String updateTask(@PathParam("taskID") String taskID,
+							 @FormParam("validFlag") String validFlag,
+			     			 @Context HttpServletRequest request){
+		TaskTemplate taskTemplate = taskService.getTaskTemplateByTaskID(taskID);
+		
+		logger.info("修改任务:"+JsonTool.Json2String(taskTemplate)+"的validFlag为"+validFlag);
+		if (!UserTool.isAdmin(request)){
+			return ReturnTool.getFailedStringReturn("没有权限");
+		}
+		taskTemplate.setValidFlag(validFlag);
+		taskService.updateTask(taskID, taskTemplate);
+		return ReturnTool.getSuccStringReturn();
 	}
 	
 	@GET
-	@Path("task/{id}")
-	public String RetrieveTask(@PathParam("id") String id){
-		System.out.println("request 查");
-		String result  = "查";
-		
-		
-		//从数据库找到对应的task，然后反馈给前台
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		return result;
+	@Path("task/{taskID}")
+	public String retrieveTask(@PathParam("taskID") String taskID){
+		TaskTemplate taskTemplate = taskService.getTaskTemplateByTaskID(taskID);
+		ReturnMsg ret = ReturnTool.getSuccReturn();
+		ret.setTaskTemplate(taskTemplate);
+		return JsonTool.Json2String(ret);
 	}
+	
+	/**
+	 * 根据taskID创建excel
+	 * @param taskID
+	 * @return
+	 */
+	@GET
+	@Path("excelTask/{taskID}")
+	public String getTaskEcxel(@PathParam("taskID") String taskID){
+		TaskTemplate taskTemplate = taskService.getTaskTemplateByTaskID(taskID);
+		ReturnMsg ret = ReturnTool.getSuccReturn();
+		ret.setTaskTemplate(taskTemplate);
+		return JsonTool.Json2String(ret);
+	}
+	
+	
+	
 }

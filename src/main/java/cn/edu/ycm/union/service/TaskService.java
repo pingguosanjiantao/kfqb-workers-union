@@ -20,6 +20,7 @@ import cn.edu.ycm.union.dto.TaskObject;
 import cn.edu.ycm.union.dto.TaskTemplate;
 import cn.edu.ycm.union.dto.UserInfo;
 import cn.edu.ycm.union.utils.GenerateID;
+import cn.edu.ycm.union.utils.JsonTool;
 
 public class TaskService {
 	
@@ -55,15 +56,23 @@ public class TaskService {
 		databaseOper.deleteCollection("task"+taskID);
 	}
 	
+	//改
+	public void updateTask(String taskID, TaskTemplate taskTemplate){
+		logger.info("更改一个统计任务");
+		Bson bson = Filters.eq("taskID",taskID);
+		String json = JsonTool.Json2String(taskTemplate);
+		databaseOper.updateDocument("tasks", bson, json);
+	}
+	
 	//查
-	public TaskObject getTaskByTaskID(String taskID){
+	public TaskTemplate getTaskTemplateByTaskID(String taskID){
 		logger.info("查询一个统计任务");
 		//删除tasks中的任务
 		Bson bson = Filters.eq("taskID",taskID);
 		MongoCursor<Document> result = databaseOper.getDocumentByBson("tasks", bson).iterator();
-		TaskObject ret = null;
+		TaskTemplate ret = null;
 		while(result.hasNext()){
-			ret = new Gson().fromJson(result.next().toJson(),TaskObject.class);
+			ret = new Gson().fromJson(result.next().toJson(),TaskTemplate.class);
 		}
 		return ret;
 	}
@@ -101,7 +110,7 @@ public class TaskService {
 		String collectionName = "task"+taskID;
 		TaskData taskData = new TaskData();
 		taskData.setUserID(userID);
-		TaskObject taskObject = getTaskByTaskID(taskID);
+		TaskObject taskObject = getTaskTemplateByTaskID(taskID).getTaskObject();
 		taskData.setTaskObject(taskObject);
 		databaseOper.insertDocument(collectionName, new Gson().toJson(taskData));
 	}

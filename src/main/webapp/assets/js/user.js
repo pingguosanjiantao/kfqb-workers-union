@@ -112,7 +112,7 @@ $(document).ready(function(){
 				    	    	        cache: false,
 				    	    	    		dataType:"json",
 				    	    	    		data:{"newuser":reqdata},
-				    	    	        success: function(data) {
+				    	    	    		success: function(data) {
 				    	    	        		if (data.status === "0"){
 				    	    	        			if (isAdmin==="true"){
 				    	    	        				$('#modaltext').text("设置管理员成功");
