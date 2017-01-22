@@ -138,6 +138,10 @@ public class TaskController {
 	public String updateUserTask(@PathParam("taskID") String taskID,
 							 @FormParam("taskObject") String taskObjectJson,
 			     			 @Context HttpServletRequest request){
+		TaskTemplate taskTemplate = taskService.getTaskTemplateByTaskID(taskID);
+		if (taskTemplate.getValidFlag().equals("false")){
+			return ReturnTool.getFailedStringReturn("该统计不可填写！");
+		}
 		TaskObject taskObject = (TaskObject) JsonTool.String2Json(taskObjectJson, TaskObject.class);
 		String userID = UserTool.getUserIDBySession(request);
 		taskService.updateTaskByTaskIDAndUserID(taskID, userID, taskObject);
