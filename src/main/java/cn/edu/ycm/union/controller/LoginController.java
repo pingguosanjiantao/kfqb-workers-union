@@ -18,6 +18,8 @@ import cn.edu.ycm.union.dto.ReturnMsg;
 import cn.edu.ycm.union.dto.UserInfo;
 import cn.edu.ycm.union.service.UserService;
 import cn.edu.ycm.union.userbuffer.UserMap;
+import cn.edu.ycm.union.utils.ReturnTool;
+import cn.edu.ycm.union.utils.UserTool;
 
 @Path("/login")
 public class LoginController {
@@ -29,8 +31,8 @@ public class LoginController {
 	private UserService userService = new UserService();
 	
 	@POST
-	@Path("/")
-	public String getTasks(@FormParam("username") String userID,
+	@Path("/login")
+	public String login(@FormParam("username") String userID,
 						   @FormParam("password") String cellphone,
 						   @Context HttpServletRequest request) throws IOException{
 		
@@ -52,6 +54,21 @@ public class LoginController {
 		return doWrongPassword();
 	}
 	
+	@POST
+	@Path("/logout")
+	public String logout(@Context HttpServletRequest request) throws IOException{
+		
+		UserInfo userInfo = UserTool.getUserBySession(request);
+		logger.info("工号为"+userInfo.getId()+"的用户退出");
+		doLogout(userInfo);
+		return ReturnTool.getSuccStringReturn();
+	}
+	
+	
+	private void doLogout(UserInfo userInfo) {
+		userMap.delUser(userInfo);
+	}
+
 	private String doUndefinedUser(String userID){
 		ReturnMsg ret = new ReturnMsg();
 		ret.setStatus("1");

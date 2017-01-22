@@ -15,7 +15,7 @@ jQuery(document).ready(function() {
     			$('#myModal').modal();  
     		}else{
     			$.ajax({
-        	        url: "./login",
+        	        url: "./login/login",
         	        type: "POST",
         	        cache: false,
         	    		dataType:"json",

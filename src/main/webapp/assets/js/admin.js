@@ -52,8 +52,8 @@ $(document).ready(function(){
 	    			url: "/kfqb-workers-union/action/task",
 	    	        type: "POST",
 	    	        cache: false,
-	    	    		dataType:"json",
-	    	    		data:{"newtask":GetNewTaskTableData()},
+	    	    	dataType:"json",
+	    	    	data:{"newtask":GetNewTaskTableData()},
 	    	        success: function(data) {
 	    	        		if (data.status === "0"){
 	    	        			$('#modaltext').text("新建任务成功");
@@ -246,5 +246,4 @@ $(document).ready(function(){
 	        },
 	    });
 	});
-	
 });

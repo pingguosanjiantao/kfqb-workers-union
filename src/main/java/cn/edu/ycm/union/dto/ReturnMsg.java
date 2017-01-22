@@ -20,6 +20,16 @@ public class ReturnMsg {
 	
 	private TaskTemplate taskTemplate;
 	
+	private TaskObject taskObject;
+	
+	public TaskObject getTaskObject() {
+		return taskObject;
+	}
+
+	public void setTaskObject(TaskObject taskObject) {
+		this.taskObject = taskObject;
+	}
+
 	public TaskTemplate getTaskTemplate() {
 		return taskTemplate;
 	}

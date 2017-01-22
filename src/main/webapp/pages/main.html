@@ -4,8 +4,6 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="">
-	<meta name="author" content="">
 	<title>欢迎进入工会统计系统</title>
 	<!-- Bootstrap Core CSS -->
 	<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -45,14 +43,9 @@
 		</div>
 	</header>
 
-	<!-- Services Section -->
+	<!-- 统计任务 -->
 	<section id="tasks">
 		<div class="container">
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<h2 class="section-heading">统计项目列表</h2>
-				</div>
-			</div>
 			<div class="row text-center" id="taskTable"></div>
 		</div>
 	</section>
@@ -128,35 +121,20 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-8 col-lg-offset-2">
-							<div class="modal-body">
+							<div class="modal-body" id="modalbody">
 								<h2>医疗定点医院修改</h2>
 								<p class="item-intro text-muted">截止至2017年1月10日.</p>
-								<p id="testID" />
 								<table class="table table-hover">
-									  <tbody>
-									    <tr>
-									      <td>圆珠笔</td>
-									      <td><input type="number" value="0"/></td>
-									    </tr>
-									    <tr>
-									      <td>笔筒</td>
-									      <td><input type="number" value="0"/></td>
-									    </tr>
-									    <tr>
-									      <td>直尺</td>
-									      <td><input type="number" placeholder="把"/></td>
-									    </tr>
-									    <tr>
-									      <td>身份证号</td>
-									      <td><input type="text" placeholder="请输入身份证号"/></td>
-									    </tr>
-									  </tbody>
-									</table>
-									<a href="#myModal" class="portfolio-link" data-toggle="modal">
-										<button type="button" class="btn btn-primary" data-dismiss="modal">
-											<span class="glyphicon glyphicon-ok-sign"></span>  提交
-										</button>
-									</a>
+								    <tr>
+								      <td>身份证号</td>
+								      <td><input type="text" placeholder="请输入身份证号"/></td>
+								    </tr>
+								</table>
+								<a href="#myModal" class="portfolio-link" data-toggle="modal">
+									<button type="button" class="btn btn-primary" data-dismiss="modal">
+										<span class="glyphicon glyphicon-ok-sign"></span>提交
+									</button>
+								</a>
                             </div>
                         </div>
                     </div>
@@ -166,21 +144,21 @@
     </div>
     
     <!-- 弹出对话框 -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		    <div class="modal-dialog">
-		        <div class="modal-content">
-		            <div class="modal-header">
-		                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		                <h3 class="modal-title" id="myModalLabel">温馨的提示</h3>
-		            </div>
-		            <div id="modaltext" class="modal-body" ></div>
-		            <div class="modal-footer">
-		                <button type="button" class="btn2" data-dismiss="modal">关闭</button>
-		            </div>
-		        </div><!-- /.modal-content -->
-		    </div><!-- /.modal -->
-		</div>
-    
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h3 class="modal-title" id="myModalLabel">温馨的提示</h3>
+	            </div>
+	            <div id="modaltext" class="modal-body" ></div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn2" data-dismiss="modal" id="tipmodalbtn">关闭</button>
+	            </div>
+	        </div><!-- /.modal-content -->
+	    </div><!-- /.modal -->
+	</div>
+
     <footer>
         <div class="container">
             <div class="row">

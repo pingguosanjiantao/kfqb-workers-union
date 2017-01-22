@@ -91,6 +91,9 @@ public class UserController {
 	@Path("user/{id}")
 	public String RetrieveTask(@PathParam("id") String id,
 							   @Context HttpServletRequest request){
+		if (id.equals("self")){
+			id= UserTool.getUserIDBySession(request);
+		}
 		logger.info("查询id为"+id+"的用户");
 		if (!UserTool.isAdminOrSelf(id,request)){
 			return ReturnTool.getFailedStringReturn("没有权限");

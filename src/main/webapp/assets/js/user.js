@@ -186,4 +186,24 @@ $(document).ready(function(){
         return str;
     }
 	
+	$('#logout').on('click', function() {
+		$.ajax({
+	        url: "../login/logout",
+	        type: "POST",
+	        cache: false,
+	    	dataType:"json",
+	        success: function(data) {
+	        	window.location.href="../";
+	        },
+	        error: function() {
+	        	$('#modaltext').text("访问出错");
+    			$('#myModal').modal();  
+	        },
+	    });
+	});
+	//Jump to admin page
+	$('#userbtn').on('click', function() {
+		//请求跳转
+		window.location.href="../pages/main.html";
+	});
 });

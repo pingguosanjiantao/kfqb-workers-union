@@ -91,22 +91,37 @@ public class TaskService {
 	
 	/************************** 针对用户的task **********************************/
 	
+	//用户请求填写
+	public TaskObject getUserTaskByTaskIDAndUserID(String taskID,String userID){
+		logger.info("用户"+userID+"请求填写"+taskID+"任务");
+		TaskObject result = getTaskByTaskIDAndUserID(taskID,userID);
+		if (result == null){//如果不存在则插入一条新的
+			createTaskByTaskIDAndUserID(taskID,userID);
+		}
+		TaskObject ret = getTaskByTaskIDAndUserID(taskID,userID);
+		logger.info(JsonTool.Json2String(ret));
+		return ret;
+	}
+	
+	
 	//查
 	public TaskObject getTaskByTaskIDAndUserID(String taskID,String userID){
-		logger.info("用户“+userID+”查询“+taskID+”任务");
+		logger.info("用户"+userID+"查询"+taskID+"任务");
 		String collectionName = "task"+taskID;
 		Bson bson = Filters.eq("userID",userID);
 		MongoCursor<Document> result = databaseOper.getDocumentByBson(collectionName, bson).iterator();
-		TaskObject ret = null;
+		TaskData ret = null;
 		while(result.hasNext()){
-			ret = new Gson().fromJson(result.next().toJson(),TaskObject.class);
+			String tmp = result.next().toJson();
+			ret = new Gson().fromJson(tmp,TaskData.class);
+			return ret.getTaskObject();
 		}
-		return ret;
+		return null;
 	}
 	
 	//为某个用户新建某个任务-注：个人任务不支持删除
 	public void createTaskByTaskIDAndUserID(String taskID,String userID){
-		logger.info("为用户“+userID+”创建“+taskID+”任务");
+		logger.info("为用户"+userID+"创建"+taskID+"任务");
 		String collectionName = "task"+taskID;
 		TaskData taskData = new TaskData();
 		taskData.setUserID(userID);
@@ -117,7 +132,7 @@ public class TaskService {
 	
 	//为某个用户更新某个任务
 	public void updateTaskByTaskIDAndUserID(String taskID,String userID,TaskObject taskObject){
-		logger.info("为用户“+userID+”更新“+taskID+”任务");
+		logger.info("为用户"+userID+"更新"+taskID+"任务");
 		String collectionName = "task"+taskID;
 		TaskData taskData = new TaskData();
 		taskData.setUserID(userID);

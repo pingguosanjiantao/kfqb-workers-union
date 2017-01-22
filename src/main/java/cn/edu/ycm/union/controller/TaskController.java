@@ -34,9 +34,6 @@ public class TaskController {
 	@Path("tasks")
 	public String getTasks(@Context HttpServletRequest request){
 		logger.info("查询所有任务");
-		if (!UserTool.isAdmin(request)){
-			return ReturnTool.getFailedStringReturn("没有权限");
-		}
 		List<TaskTemplate> result = taskService.getTasks();
 		ReturnMsg ret = ReturnTool.getSuccReturn();
 		ret.setTasks(result);
@@ -113,6 +110,38 @@ public class TaskController {
 		return JsonTool.Json2String(ret);
 	}
 	
+	/**
+	 * 用户读取自己的任务信息，用于填写
+	 * @param taskID
+	 * @param request
+	 * @return
+	 */
+	@GET
+	@Path("usertask/{taskID}")
+	public String getUserTaskByTaskID(@PathParam("taskID") String taskID,
+									  @Context HttpServletRequest request){
+		String userID = UserTool.getUserIDBySession(request);
+		TaskObject taskObject = taskService.getUserTaskByTaskIDAndUserID(taskID,userID);
+		ReturnMsg ret = ReturnTool.getSuccReturn();
+		ret.setTaskObject(taskObject);
+		logger.info(JsonTool.Json2String(ret));
+		return JsonTool.Json2String(ret);
+	}
 	
+	/**
+	 * 更新用户填写表格
+	 * @param validFlag
+	 * @return
+	 */
+	@PUT
+	@Path("usertask/{taskID}")
+	public String updateUserTask(@PathParam("taskID") String taskID,
+							 @FormParam("taskObject") String taskObjectJson,
+			     			 @Context HttpServletRequest request){
+		TaskObject taskObject = (TaskObject) JsonTool.String2Json(taskObjectJson, TaskObject.class);
+		String userID = UserTool.getUserIDBySession(request);
+		taskService.updateTaskByTaskIDAndUserID(taskID, userID, taskObject);
+		return ReturnTool.getSuccStringReturn();
+	}
 	
 }
