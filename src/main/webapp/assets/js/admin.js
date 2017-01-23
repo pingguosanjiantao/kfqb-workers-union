@@ -233,7 +233,29 @@ $(document).ready(function(){
 				    	    	});
 				    	    	
 				    	    	//绑定导出EXCEL事件
-				    	    	
+				    	    	$("#out"+data.tasks[i].taskID).on('click',data.tasks[i], function(event) {
+				    	    		var task = event.data;
+				    	    		/*请求任务页面*/
+				    	    		$.ajax({
+				    	    			url: "/kfqb-workers-union/action/excelTask/"+task.taskID,
+				    	    	        type: "GET",
+				    	    	        cache: false,
+				    	    	        dataType:"json",
+				    	    	        success: function(data) {
+				    	    	        		if (data.status === "0"){
+				    	    	        			window.location.href=data.jumpurl;
+				    	    	        		}else{
+				    	    	        			$('#modaltext').text(data.msg);
+				    	    	        			$('#myModal').modal();  
+				    	    	        		}
+				    	    	        },
+				    	    	        error: function() {
+				    	    	        		$('#modaltext').text("访问出错");
+				    	    	        		$('#myModal').modal();  
+				    	    	        },
+				    	    	    });
+				    	    		
+				    	    	});
 				    	    	
 	    		    	}
 		    		}else{//校验未通过，弹框提示

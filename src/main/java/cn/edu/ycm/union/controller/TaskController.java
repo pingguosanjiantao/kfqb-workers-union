@@ -103,10 +103,18 @@ public class TaskController {
 	 */
 	@GET
 	@Path("excelTask/{taskID}")
-	public String getTaskEcxel(@PathParam("taskID") String taskID){
-		TaskTemplate taskTemplate = taskService.getTaskTemplateByTaskID(taskID);
+	public String getTaskEcxel(@PathParam("taskID") String taskID,
+							   @Context HttpServletRequest request){
+		logger.info("用户请求生成"+taskID+"EXCEL数据");
+		if (!UserTool.isAdmin(request)){
+			return ReturnTool.getFailedStringReturn("没有权限");
+		}
+		String result = taskService.getExcelFileUserTaskByTaskID(taskID);
+		if (result == null){
+			return ReturnTool.getFailedStringReturn("生产EXCEL错误，请联系管理员");
+		}
 		ReturnMsg ret = ReturnTool.getSuccReturn();
-		ret.setTaskTemplate(taskTemplate);
+		ret.setJumpurl(result);
 		return JsonTool.Json2String(ret);
 	}
 	
