@@ -236,25 +236,29 @@ $(document).ready(function(){
 				    	    	$("#out"+data.tasks[i].taskID).on('click',data.tasks[i], function(event) {
 				    	    		var task = event.data;
 				    	    		/*请求任务页面*/
-				    	    		$.ajax({
-				    	    			url: "/kfqb-workers-union/action/excelTask/"+task.taskID,
-				    	    	        type: "GET",
-				    	    	        cache: false,
-				    	    	        dataType:"json",
-				    	    	        success: function(data) {
-				    	    	        		if (data.status === "0"){
-				    	    	        			window.location.href=data.jumpurl;
-				    	    	        		}else{
-				    	    	        			$('#modaltext').text(data.msg);
-				    	    	        			$('#myModal').modal();  
-				    	    	        		}
-				    	    	        },
-				    	    	        error: function() {
-				    	    	        		$('#modaltext').text("访问出错");
-				    	    	        		$('#myModal').modal();  
-				    	    	        },
-				    	    	    });
-				    	    		
+//				    	    		$.ajax({
+//				    	    			url: "/kfqb-workers-union/action/excelTask/"+task.taskID,
+//				    	    	        type: "GET",
+//				    	    	        cache: false,
+//				    	    	        dataType:"json",
+//				    	    	        success: function(data) {
+//				    	    	        		if (data.status === "0"){
+//				    	    	        			window.location.href=data.jumpurl;
+//				    	    	        		}else{
+//				    	    	        			$('#modaltext').text(data.msg);
+//				    	    	        			$('#myModal').modal();  
+//				    	    	        		}
+//				    	    	        },
+//				    	    	        error: function() {
+//				    	    	        		$('#modaltext').text("访问出错");
+//				    	    	        		$('#myModal').modal();  
+//				    	    	        },
+//				    	    	    });
+				    	    		var form = $("<form>"); //定义一个form表单
+				    	    		form.attr('method', 'get');
+				    	    		form.attr('action', "/kfqb-workers-union/action/excelTask/"+task.taskID);
+				    	    		$('body').append(form);
+				    	    		form.submit();
 				    	    	});
 				    	    	
 	    		    	}

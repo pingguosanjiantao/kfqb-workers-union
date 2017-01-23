@@ -1,8 +1,14 @@
 package cn.edu.ycm.union.controller;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -100,22 +106,48 @@ public class TaskController {
 	 * 根据taskID创建excel
 	 * @param taskID
 	 * @return
+	 * @throws IOException 
 	 */
 	@GET
 	@Path("excelTask/{taskID}")
 	public String getTaskEcxel(@PathParam("taskID") String taskID,
-							   @Context HttpServletRequest request){
+							   @Context HttpServletRequest request,
+							   @Context HttpServletResponse response) throws IOException{
 		logger.info("用户请求生成"+taskID+"EXCEL数据");
 		if (!UserTool.isAdmin(request)){
 			return ReturnTool.getFailedStringReturn("没有权限");
 		}
-		String result = taskService.getExcelFileUserTaskByTaskID(taskID);
+		
+		//1.获取要下载的文件的绝对路径
+		String realPath = request.getSession().getServletContext().getRealPath("/download/tmp.xlsx");
+		
+		String result = taskService.getExcelFileUserTaskByTaskID(taskID,realPath);
 		if (result == null){
-			return ReturnTool.getFailedStringReturn("生产EXCEL错误，请联系管理员");
+			return ReturnTool.getFailedStringReturn("生成EXCEL错误，请联系管理员");
 		}
+		
+        //2.获取要下载的文件名
+		TaskTemplate taskTemplate = taskService.getTaskTemplateByTaskID(taskID);
+        String fileName = taskTemplate.getTaskObject().getTaskTitle()+".xlsx";
+        //3.设置content-disposition响应头控制浏览器以下载的形式打开文件
+        response.setHeader("content-disposition", "attachment;filename="+URLEncoder.encode(fileName, "UTF-8"));
+        //4.获取要下载的文件输入流
+        InputStream in = new FileInputStream(realPath);
+        int len = 0;
+        //5.创建数据缓冲区
+        byte[] buffer = new byte[1024];
+        //6.通过response对象获取OutputStream流
+        OutputStream out = response.getOutputStream();
+        //7.将FileInputStream流写入到buffer缓冲区
+        while ((len = in.read(buffer)) > 0) {
+        //8.使用OutputStream将缓冲区的数据输出到客户端浏览器
+            out.write(buffer,0,len);
+        }
+        in.close();
+		
 		ReturnMsg ret = ReturnTool.getSuccReturn();
 		ret.setJumpurl(result);
-		return JsonTool.Json2String(ret);
+		return ReturnTool.getSuccStringReturn();
 	}
 	
 	/**

@@ -161,10 +161,9 @@ public class TaskService {
 		return ret;
 	}
 	
-	public String getExcelFileUserTaskByTaskID(String taskID){
+	public String getExcelFileUserTaskByTaskID(String taskID, String fileName){
 		TaskTemplate taskTemplate = getTaskTemplateByTaskID(taskID);
 		Map<String,TaskObject> result = getUserDatasByTaskID(taskID);
-		String fileName = System.getProperty("user.dir")+"../bin/task-result.xlsx";
 		//打开excel文件
 		try( FileOutputStream fos = new FileOutputStream(fileName)){
 			
